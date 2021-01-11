@@ -1,6 +1,8 @@
 package com.mrwhoknows.ecommerce_mob_app.di
 
-import com.mrwhoknows.ecommerce_mob_app.network.ProductService
+import com.mrwhoknows.ecommerce_mob_app.network.service.ProductService
+import com.mrwhoknows.ecommerce_mob_app.network.util.ProductDtoMapper
+import com.mrwhoknows.ecommerce_mob_app.network.util.ProductMetaDtoMapper
 import com.mrwhoknows.ecommerce_mob_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -41,4 +43,11 @@ object NetworkModule {
             .create(ProductService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideProductMapper(): ProductDtoMapper = ProductDtoMapper()
+
+    @Singleton
+    @Provides
+    fun provideProductMetaMapper(): ProductMetaDtoMapper = ProductMetaDtoMapper()
 }

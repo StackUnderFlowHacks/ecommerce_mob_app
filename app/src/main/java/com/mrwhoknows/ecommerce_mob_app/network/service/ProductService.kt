@@ -1,4 +1,4 @@
-package com.mrwhoknows.ecommerce_mob_app.network
+package com.mrwhoknows.ecommerce_mob_app.network.service
 
 import com.mrwhoknows.ecommerce_mob_app.network.response.ProductMetaListResponse
 import com.mrwhoknows.ecommerce_mob_app.network.response.ProductResponse
