@@ -33,7 +33,7 @@ class ProductListFragment : Fragment() {
                         items(items = productMetaList) { productMeta ->
                             ProductMetaCard(
                                 productMeta = productMeta,
-                                { navigateToProductFragment(productMeta.productId.toString()) }
+                                this@ProductListFragment::navigateToProductFragment
                             )
                         }
                     }
