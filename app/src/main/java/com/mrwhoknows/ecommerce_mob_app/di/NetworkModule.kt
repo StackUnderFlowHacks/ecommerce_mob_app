@@ -1,8 +1,10 @@
 package com.mrwhoknows.ecommerce_mob_app.di
 
 import com.mrwhoknows.ecommerce_mob_app.network.service.ProductService
+import com.mrwhoknows.ecommerce_mob_app.network.service.UserService
 import com.mrwhoknows.ecommerce_mob_app.network.util.ProductDtoMapper
 import com.mrwhoknows.ecommerce_mob_app.network.util.ProductMetaDtoMapper
+import com.mrwhoknows.ecommerce_mob_app.network.util.UserDtoMapper
 import com.mrwhoknows.ecommerce_mob_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -45,9 +47,24 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideUserService(baseUrl: String, client: OkHttpClient): UserService {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(client)
+            .build()
+            .create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideProductMapper(): ProductDtoMapper = ProductDtoMapper()
 
     @Singleton
     @Provides
     fun provideProductMetaMapper(): ProductMetaDtoMapper = ProductMetaDtoMapper()
+
+    @Singleton
+    @Provides
+    fun provideUserMapper(): UserDtoMapper = UserDtoMapper()
 }
