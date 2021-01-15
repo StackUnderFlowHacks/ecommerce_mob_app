@@ -9,5 +9,8 @@ data class ProductMeta(
     val productId: Int,
     val productSlug: String,
     val stock: Int,
-    val thumbnail: String
+    val thumbnail: String,
+    val rating: Double,
+    val brand: String,
+    val discount: Double
 )

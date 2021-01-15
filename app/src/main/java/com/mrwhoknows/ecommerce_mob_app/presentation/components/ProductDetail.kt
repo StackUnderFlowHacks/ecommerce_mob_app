@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.mrwhoknows.ecommerce_mob_app.domain.model.Product
 import com.mrwhoknows.ecommerce_mob_app.presentation.theme.typography
 import dev.chrisbanes.accompanist.coil.CoilImage
+import kotlin.math.roundToInt
 
 @Composable
 fun ProductDetails(product: Product) {
@@ -66,7 +67,7 @@ fun ProductDetails(product: Product) {
         }
         Spacer(modifier = Modifier.padding(4.dp))
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp),
@@ -77,14 +78,26 @@ fun ProductDetails(product: Product) {
                 fontSize = TextUnit.Sp(24),
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
+//                    TODO: change it (should be done on backend)
             val originalAmount =
-                product.price + ((product.price) * (product.discount.toFloat() / 100))
+                ((product.price) * 100) / (100 - (product.discount.toDouble())).roundToInt()
             Text(
-                text = "($originalAmount)",
+                text = "₹ $originalAmount",
                 textDecoration = TextDecoration.LineThrough,
                 fontWeight = FontWeight.ExtraLight,
                 fontSize = TextUnit.Sp(16),
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(horizontal = 8.dp)
+            )
+            Text(
+                text = "${product.discount.toDouble().roundToInt()}% off",
+                fontWeight = FontWeight.Medium,
+                fontSize = TextUnit.Sp(14),
+                color = Color.Green,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(horizontal = 2.dp)
             )
         }
         Spacer(modifier = Modifier.padding(4.dp))

@@ -6,6 +6,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ProductMetaDto(
+    @Json(name = "brand")
+    val brand: String? = null,
+    @Json(name = "discount")
+    val discount: Double? = null,
     @Json(name = "isInStock")
     val isInStock: Boolean? = null,
     @Json(name = "manufacturer")
@@ -20,6 +24,8 @@ data class ProductMetaDto(
     val productId: Int? = null,
     @Json(name = "productSlug")
     val productSlug: String? = null,
+    @Json(name = "rating")
+    val rating: Double? = null,
     @Json(name = "stock")
     val stock: Int? = null,
     @Json(name = "thumbnail")

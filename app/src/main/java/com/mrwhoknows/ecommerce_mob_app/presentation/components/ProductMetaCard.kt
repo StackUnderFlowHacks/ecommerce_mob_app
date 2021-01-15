@@ -16,12 +16,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.mrwhoknows.ecommerce_mob_app.domain.model.ProductMeta
 import com.mrwhoknows.ecommerce_mob_app.presentation.theme.typography
 import dev.chrisbanes.accompanist.coil.CoilImage
+import kotlin.math.roundToInt
 
 @Composable
 fun ProductMetaCard(
@@ -32,17 +34,18 @@ fun ProductMetaCard(
         shape = MaterialTheme.shapes.small,
         elevation = 10.dp,
         modifier = Modifier
+            .preferredHeight(200.dp)
             .padding(horizontal = 8.dp, vertical = 1.dp)
             .clickable(onClick = { onCardClick(productMeta.productId.toString()) }),
     ) {
 
-        Row {
+        Row(modifier = Modifier.fillMaxHeight()) {
             CoilImage(
                 data = productMeta.thumbnail,
                 fadeIn = true,
                 modifier = Modifier
                     .fillMaxWidth(0.35f)
-                    .preferredHeight(200.dp),
+                    .fillMaxHeight(),
                 contentScale = ContentScale.Fit
             )
             Spacer(modifier = Modifier.padding(4.dp))
@@ -52,15 +55,20 @@ fun ProductMetaCard(
                     fontSize = TextUnit.Sp(18),
                     maxLines = 3
                 )
-                Spacer(modifier = Modifier.padding(4.dp))
-
+                Text(
+                    text = productMeta.brand,
+                    fontWeight = FontWeight.Light,
+                    fontSize = TextUnit.Sp(16)
+                )
                 Surface(
                     color = MaterialTheme.colors.primary,
-                    modifier = Modifier.clip(CircleShape),
+                    modifier = Modifier
+                        .padding(2.dp)
+                        .clip(CircleShape),
                 ) {
                     Text(
-                        text = "4.4 ⭐",
-                        modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp),
+                        text = "${productMeta.rating} ⭐",
+                        modifier = Modifier.padding(vertical = 3.dp, horizontal = 12.dp),
                         style = TextStyle(
                             textAlign = TextAlign.Center,
                             color = Color.White,
@@ -68,23 +76,48 @@ fun ProductMetaCard(
                         )
                     )
                 }
-                Spacer(modifier = Modifier.padding(4.dp))
                 Row(
                     horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(2.dp)
                 ) {
                     Text(
                         text = "₹ ${productMeta.price}",
                         style = typography.h5.copy(fontWeight = FontWeight.Medium),
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )
+//                    TODO: change it (should be done on backend)
+                    val originalAmount =
+                        ((productMeta.price) * 100) / (100 - (productMeta.discount)).roundToInt()
                     Text(
-                        text = " (${productMeta.stock})",
+                        text = "₹ $originalAmount",
+                        textDecoration = TextDecoration.LineThrough,
+                        fontWeight = FontWeight.ExtraLight,
                         fontSize = TextUnit.Sp(16),
-                        modifier = Modifier.align(Alignment.CenterVertically)
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(horizontal = 8.dp)
+                    )
+                    Text(
+                        text = "${productMeta.discount.toInt()}% off",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = TextUnit.Sp(14),
+                        color = Color.Green,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(horizontal = 2.dp)
                     )
                 }
-
+                Text(
+                    text = productMeta.paymentOption,
+                    modifier = Modifier.padding(vertical = 4.dp),
+                    style = TextStyle(
+                        textAlign = TextAlign.Center,
+                        fontStyle = typography.caption.fontStyle
+                    )
+                )
+                Spacer(modifier = Modifier.padding(4.dp))
             }
         }
     }
@@ -103,7 +136,11 @@ fun CardPreview() {
             thumbnail = "https://images-na.ssl-images-amazon.com/images/I/815K4p82zlL._SL1500_.jpg",
             stock = 399,
             isInStock = true,
-            paymentOption = "Online",
+            paymentOption = "Cash On Delivery",
+            rating = 4.3,
+            brand = "Asus Infotech",
+            discount = 15.0
         ),
-        onCardClick = { })
+        onCardClick = { }
+    )
 }

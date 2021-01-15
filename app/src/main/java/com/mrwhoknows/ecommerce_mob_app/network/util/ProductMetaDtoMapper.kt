@@ -15,7 +15,10 @@ class ProductMetaDtoMapper : DomainMapper<ProductMetaDto, ProductMeta> {
             productId = model.productId ?: -1,
             productSlug = model.productSlug ?: "Not Available",
             stock = model.stock ?: -1,
-            thumbnail = model.thumbnail ?: "Not Available"
+            thumbnail = model.thumbnail ?: "Not Available",
+            rating = model.rating ?: 0.0,
+            brand = model.brand ?: "Not Available",
+            discount = model.discount ?: 0.0
         )
     }
 
@@ -29,7 +32,10 @@ class ProductMetaDtoMapper : DomainMapper<ProductMetaDto, ProductMeta> {
             productId = domainModel.productId,
             productSlug = domainModel.productSlug,
             stock = domainModel.stock,
-            thumbnail = domainModel.thumbnail
+            thumbnail = domainModel.thumbnail,
+            rating = domainModel.rating,
+            brand = domainModel.brand,
+            discount = domainModel.discount
         )
     }
 
